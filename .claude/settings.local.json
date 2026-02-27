@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx expo install expo-camera expo-linear-gradient @react-navigation/native @react-navigation/native-stack react-native-screens react-native-safe-area-context react-native-gesture-handler zustand)",
+      "Bash(npm install)",
+      "Bash(npm install --legacy-peer-deps)",
+      "Bash(npm view expo@54.0.0 peerDependencies)",
+      "Bash(npm view expo@\"~54.0.0\" version)",
+      "Bash(npm view expo@54 version)",
+      "Bash(npm view react versions --json)",
+      "Bash(python3 -c \"import sys,json; v=json.load\\(sys.stdin\\); print\\([x for x in v if x.startswith\\(''18.3''\\)]\\)\")",
+      "Bash(npx expo install react react-native expo-status-bar)",
+      "Bash(node -e \"const ec = require\\(''expo-camera''\\); console.log\\(Object.keys\\(ec\\).filter\\(k => !k.startsWith\\(''_''\\)\\)\\)\")",
+      "Bash(npm install --save-dev @types/react typescript 2)",
+      "Bash(1 --prefix \"d:/Projects/Craft/React Native Apps/antiquito\")",
+      "Bash(npm install --save-dev babel-preset-expo)",
+      "Bash(node -e \"require.resolve\\(''babel-preset-expo'', { paths: [''d:/Projects/Craft/React Native Apps/antiquito''] }\\)\")",
+      "Bash(node -e \"console.log\\(require\\(''d:/Projects/Craft/React Native Apps/antiquito/node_modules/babel-preset-expo/package.json''\\).version\\)\")",
+      "Bash(npx expo install @react-navigation/bottom-tabs)"
+    ]
+  }
+}
