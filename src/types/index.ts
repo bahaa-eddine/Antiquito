@@ -33,6 +33,7 @@ export type RootStackParamList = {
   Camera: undefined;
   Preview: { imageUri: string };
   Result: undefined;
+  Paywall: undefined;
 };
 
 export type TabParamList = {

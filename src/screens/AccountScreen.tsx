@@ -1,18 +1,34 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import Constants from 'expo-constants';
 import { signOut } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { useStore } from '../store/useStore';
 import { Colors, Spacing, Radius, Shadow } from '../utils/constants';
+import { RootStackParamList } from '../types';
+
+const IS_EXPO_GO = Constants.appOwnership === 'expo';
 
 export default function AccountScreen() {
   const { user, scanHistory } = useStore();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const isPremium = useStore((s) => s.isPremium);
+  const setIsPremium = useStore((s) => s.setIsPremium);
+  const resetDailyScans = useStore((s) => s.resetDailyScans);
 
   const handleLogout = async () => {
     await signOut(auth);
     // onAuthStateChanged fires with null → store.logout() called automatically
+  };
+
+  const handleResetTestData = () => {
+    setIsPremium(false);
+    resetDailyScans(); // resets freeScansUsed = 0, freeScansDate = today
+    Alert.alert('Reset', 'Subscription cleared. You now have 3 free scans again.');
   };
 
   const totalScans = scanHistory.length;
@@ -66,6 +82,33 @@ export default function AccountScreen() {
           <View style={styles.divider} />
           <InfoRow icon="cloud-offline-outline" label="Data Storage" value="On-device only" />
         </View>
+
+        {/* ── Test mode controls (Expo Go only) ── */}
+        {IS_EXPO_GO && (
+          <View style={styles.testCard}>
+            <View style={styles.testHeader}>
+              <Ionicons name="flask-outline" size={15} color={Colors.uncertain} />
+              <Text style={styles.testTitle}>Test Mode</Text>
+            </View>
+            <Text style={styles.testSubtitle}>
+              Status: {isPremium ? '👑 Premium (simulated)' : '🆓 Free tier'}
+            </Text>
+            <View style={styles.testActions}>
+              <TouchableOpacity style={styles.testBtn} onPress={handleResetTestData} activeOpacity={0.8}>
+                <Ionicons name="refresh-outline" size={16} color={Colors.uncertain} />
+                <Text style={styles.testBtnText}>Reset to Free</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.testBtn, styles.testBtnPrimary]}
+                onPress={() => navigation.navigate('Paywall')}
+                activeOpacity={0.8}
+              >
+                <Ionicons name="crown-outline" size={16} color={Colors.primary} />
+                <Text style={[styles.testBtnText, styles.testBtnTextPrimary]}>Open Paywall</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
 
         {/* ── Logout ── */}
         <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout} activeOpacity={0.85}>
@@ -192,6 +235,38 @@ const styles = StyleSheet.create({
   infoLabel: { flex: 1, fontSize: 14, color: Colors.text, fontWeight: '500' },
   infoValue: { fontSize: 14, color: Colors.textSecondary },
   divider: { height: 1, backgroundColor: Colors.separator },
+
+  // ── Test mode card ──
+  testCard: {
+    backgroundColor: Colors.uncertainLight,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+    borderWidth: 1,
+    borderColor: '#E8D5A3',
+  },
+  testHeader: { flexDirection: 'row', alignItems: 'center', gap: Spacing.xs },
+  testTitle: { fontSize: 12, fontWeight: '800', color: Colors.uncertain, textTransform: 'uppercase', letterSpacing: 0.8 },
+  testSubtitle: { fontSize: 13, color: Colors.uncertain, fontWeight: '500' },
+  testActions: { flexDirection: 'row', gap: Spacing.sm },
+  testBtn: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.xs,
+    height: 40,
+    borderRadius: Radius.md,
+    borderWidth: 1,
+    borderColor: Colors.uncertain,
+    backgroundColor: Colors.surface,
+  },
+  testBtnPrimary: {
+    borderColor: Colors.primary,
+    backgroundColor: '#FBF8F2',
+  },
+  testBtnText: { fontSize: 13, fontWeight: '600', color: Colors.uncertain },
+  testBtnTextPrimary: { color: Colors.primary },
 
   // ── Logout ──
   logoutBtn: {

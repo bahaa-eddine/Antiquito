@@ -21,6 +21,11 @@ interface AppState {
   // ── Scan history (persisted locally) ─────────────────────────────────────
   scanHistory: ScanRecord[];
 
+  // ── Subscription ──────────────────────────────────────────────────────────
+  isPremium: boolean;
+  freeScansUsed: number;
+  freeScansDate: string; // toDateString() — resets counter when date changes
+
   // ── Actions ───────────────────────────────────────────────────────────────
   login: (user: User) => void;
   logout: () => void;
@@ -33,6 +38,10 @@ interface AppState {
 
   addScanRecord: (record: ScanRecord) => void;
   setViewingScan: (record: ScanRecord | null) => void;
+
+  setIsPremium: (val: boolean) => void;
+  incrementFreeScans: () => void;
+  resetDailyScans: () => void;
 
   reset: () => void;
 }
@@ -53,6 +62,9 @@ export const useStore = create<AppState>()(
       authReady: false,
       ...initialScanState,
       scanHistory: [],
+      isPremium: false,
+      freeScansUsed: 0,
+      freeScansDate: '',
 
       login: (user) => set({ user, isAuthenticated: true }),
       // scanHistory intentionally NOT cleared on logout — it's local-only data
@@ -68,13 +80,22 @@ export const useStore = create<AppState>()(
         set((state) => ({ scanHistory: [record, ...state.scanHistory] })),
       setViewingScan: (record) => set({ viewingScan: record }),
 
+      setIsPremium: (val) => set({ isPremium: val }),
+      incrementFreeScans: () => set((state) => ({ freeScansUsed: state.freeScansUsed + 1 })),
+      resetDailyScans: () => set({ freeScansUsed: 0, freeScansDate: new Date().toDateString() }),
+
       reset: () => set(initialScanState),
     }),
     {
       name: 'antiquito-storage',
       storage: createJSONStorage(() => AsyncStorage),
-      // Only persist scan history — auth state is managed by Firebase
-      partialize: (state) => ({ scanHistory: state.scanHistory }),
+      // Persist scan history and subscription state — auth is managed by Firebase
+      partialize: (state) => ({
+        scanHistory: state.scanHistory,
+        isPremium: state.isPremium,
+        freeScansUsed: state.freeScansUsed,
+        freeScansDate: state.freeScansDate,
+      }),
     }
   )
 );

@@ -15,6 +15,7 @@ import PreviewScreen from './src/screens/PreviewScreen';
 import ResultScreen from './src/screens/ResultScreen';
 import HistoryScreen from './src/screens/HistoryScreen';
 import AccountScreen from './src/screens/AccountScreen';
+import PaywallScreen from './src/screens/PaywallScreen';
 import CustomTabBar from './src/components/CustomTabBar';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -75,6 +76,11 @@ export default function App() {
                   name="Result"
                   component={ResultScreen}
                   options={{ animation: 'slide_from_right' }}
+                />
+                <Stack.Screen
+                  name="Paywall"
+                  component={PaywallScreen}
+                  options={{ animation: 'slide_from_bottom' }}
                 />
               </>
             )}

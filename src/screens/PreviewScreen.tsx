@@ -15,14 +15,34 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { useStore } from '../store/useStore';
 import { Colors, Spacing, Radius } from '../utils/constants';
+import { FREE_SCAN_LIMIT } from '../utils/iap';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Preview'>;
 
 export default function PreviewScreen({ route, navigation }: Props) {
   const { imageUri } = route.params;
   const { setCapturedImage, isLoading } = useStore();
+  const isPremium = useStore((s) => s.isPremium);
+  const freeScansUsed = useStore((s) => s.freeScansUsed);
+  const freeScansDate = useStore((s) => s.freeScansDate);
+  const incrementFreeScans = useStore((s) => s.incrementFreeScans);
+  const resetDailyScans = useStore((s) => s.resetDailyScans);
 
   const handleAnalyze = () => {
+    if (!isPremium) {
+      const today = new Date().toDateString();
+      // Reset counter if it's a new day
+      if (freeScansDate !== today) {
+        resetDailyScans();
+      }
+      // Re-read after potential reset — use fresh values
+      const scansUsed = freeScansDate !== today ? 0 : freeScansUsed;
+      if (scansUsed >= FREE_SCAN_LIMIT) {
+        navigation.navigate('Paywall');
+        return;
+      }
+      incrementFreeScans();
+    }
     setCapturedImage(imageUri);
     navigation.replace('Result');
   };
@@ -64,6 +84,11 @@ export default function PreviewScreen({ route, navigation }: Props) {
       {/* ── Bottom CTA ── */}
       <SafeAreaView edges={['bottom']} style={styles.bottomSection}>
         <Text style={styles.readyText}>Ready to analyze?</Text>
+        {!isPremium && (freeScansDate === new Date().toDateString()) && (
+          <Text style={styles.scansRemaining}>
+            {Math.max(0, FREE_SCAN_LIMIT - freeScansUsed)} free scan{FREE_SCAN_LIMIT - freeScansUsed === 1 ? '' : 's'} remaining today
+          </Text>
+        )}
         <Text style={styles.readySubtext}>
           Our AI will examine this object and identify its authenticity, origin, and history.
         </Text>
@@ -151,6 +176,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: '700',
     textAlign: 'center',
+  },
+  scansRemaining: {
+    color: 'rgba(255,210,100,0.9)',
+    fontSize: 13,
+    textAlign: 'center',
+    fontWeight: '600',
   },
   readySubtext: {
     color: 'rgba(255,255,255,0.65)',
