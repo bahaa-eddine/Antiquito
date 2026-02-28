@@ -55,8 +55,9 @@ export default function ResultScreen({ navigation }: Props) {
       try {
         const result = await analyzeImage(capturedImageUri);
         setAnalysisResult(result);
-      } catch {
-        setError('Analysis failed. Please try again.');
+      } catch (err) {
+        console.error('[analyzeImage error]', err);
+        setError(err instanceof Error ? err.message : 'Analysis failed. Please try again.');
       } finally {
         setLoading(false);
       }

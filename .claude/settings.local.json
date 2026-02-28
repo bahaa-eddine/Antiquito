@@ -16,7 +16,8 @@
       "Bash(npm install --save-dev babel-preset-expo)",
       "Bash(node -e \"require.resolve\\(''babel-preset-expo'', { paths: [''d:/Projects/Craft/React Native Apps/antiquito''] }\\)\")",
       "Bash(node -e \"console.log\\(require\\(''d:/Projects/Craft/React Native Apps/antiquito/node_modules/babel-preset-expo/package.json''\\).version\\)\")",
-      "Bash(npx expo install @react-navigation/bottom-tabs)"
+      "Bash(npx expo install @react-navigation/bottom-tabs)",
+      "Bash(npx expo install expo-file-system)"
     ]
   }
 }
