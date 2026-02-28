@@ -9,9 +9,9 @@ export default function AccountScreen() {
   const { user, logout, scanHistory } = useStore();
 
   const totalScans = scanHistory.length;
-  const realCount = scanHistory.filter((s) => s.result.authenticity === 'Real').length;
-  const fakeCount = scanHistory.filter((s) => s.result.authenticity === 'Fake').length;
-  const uncertainCount = scanHistory.filter((s) => s.result.authenticity === 'Uncertain').length;
+  const realCount = scanHistory.filter((s) => s.result.authenticity === 'Authentic').length;
+  const fakeCount = scanHistory.filter((s) => s.result.authenticity === 'Reproduction').length;
+  const uncertainCount = scanHistory.filter((s) => s.result.authenticity === 'Inconclusive').length;
 
   const initials = user?.name
     .split(' ')
@@ -45,9 +45,9 @@ export default function AccountScreen() {
         </View>
         <View style={styles.statsGrid}>
           <StatCard value={totalScans} label="Total Scans" color={Colors.primary} icon="scan-outline" />
-          <StatCard value={realCount} label="Real Antiques" color={Colors.real} icon="checkmark-circle-outline" />
-          <StatCard value={fakeCount} label="Likely Fake" color={Colors.fake} icon="close-circle-outline" />
-          <StatCard value={uncertainCount} label="Uncertain" color={Colors.uncertain} icon="help-circle-outline" />
+          <StatCard value={realCount} label="Authentic" color={Colors.real} icon="checkmark-circle-outline" />
+          <StatCard value={fakeCount} label="Reproductions" color={Colors.fake} icon="close-circle-outline" />
+          <StatCard value={uncertainCount} label="Inconclusive" color={Colors.uncertain} icon="help-circle-outline" />
         </View>
 
         {/* ── App info ── */}

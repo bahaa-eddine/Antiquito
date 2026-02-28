@@ -83,7 +83,7 @@ export default function ResultScreen({ navigation }: Props) {
 
   const handleBack = () => {
     if (viewingScan) setViewingScan(null);
-    navigation.goBack();
+    navigation.navigate('Tabs');
   };
 
   const handleScanAnother = () => {
@@ -153,7 +153,10 @@ export default function ResultScreen({ navigation }: Props) {
             <AuthenticityBadge label={displayResult.authenticity} size="lg" />
 
             <View style={styles.card}>
-              <ConfidenceBar confidence={displayResult.confidence} />
+              <ConfidenceBar
+                confidence={displayResult.confidence}
+                confidenceLabel={displayResult.confidenceLabel}
+              />
             </View>
 
             <View style={styles.card}>
@@ -199,10 +202,10 @@ export default function ResultScreen({ navigation }: Props) {
               <Text style={styles.description}>{displayResult.description}</Text>
             </View>
 
-            {displayResult.authenticity !== 'Uncertain' && (
+            {displayResult.authenticity !== 'Inconclusive' && (
               <View style={styles.card}>
                 <Text style={styles.cardTitle}>
-                  {displayResult.authenticity === 'Fake' ? 'Pricing' : 'Estimated Value'}
+                  {displayResult.authenticity === 'Reproduction' ? 'Valuation' : 'Estimated Value'}
                 </Text>
 
                 <View style={styles.priceRow}>
@@ -211,8 +214,8 @@ export default function ResultScreen({ navigation }: Props) {
                   </View>
                   <View style={styles.infoContent}>
                     <Text style={styles.infoLabel}>
-                      {displayResult.authenticity === 'Fake'
-                        ? 'Counterfeit Market Value'
+                      {displayResult.authenticity === 'Reproduction'
+                        ? 'Reproduction Market Value'
                         : 'Estimated Market Value'}
                     </Text>
                     <Text style={[styles.priceValue, styles.priceMain]}>
@@ -221,7 +224,7 @@ export default function ResultScreen({ navigation }: Props) {
                   </View>
                 </View>
 
-                {displayResult.authenticity === 'Fake' && displayResult.authenticPrice && (
+                {displayResult.authenticity === 'Reproduction' && displayResult.authenticPrice && (
                   <>
                     <View style={styles.divider} />
                     <View style={styles.priceRow}>
@@ -229,7 +232,7 @@ export default function ResultScreen({ navigation }: Props) {
                         <Ionicons name="shield-checkmark-outline" size={16} color={Colors.real} />
                       </View>
                       <View style={styles.infoContent}>
-                        <Text style={styles.infoLabel}>Genuine Original Value</Text>
+                        <Text style={styles.infoLabel}>Authentic Antique Value</Text>
                         <Text style={[styles.priceValue, styles.priceReal]}>
                           {displayResult.authenticPrice}
                         </Text>

@@ -24,7 +24,7 @@ export default function PreviewScreen({ route, navigation }: Props) {
 
   const handleAnalyze = () => {
     setCapturedImage(imageUri);
-    navigation.navigate('Result');
+    navigation.replace('Result');
   };
 
   const handleRetake = () => {

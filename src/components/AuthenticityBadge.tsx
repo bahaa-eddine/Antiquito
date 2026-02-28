@@ -13,23 +13,23 @@ const CONFIG: Record<
   AuthenticityLabel,
   { icon: keyof typeof Ionicons.glyphMap; bg: string; color: string; text: string }
 > = {
-  Real: {
+  Authentic: {
     icon: 'checkmark-circle',
     bg: Colors.realLight,
     color: Colors.real,
-    text: 'Real Antique',
+    text: 'Authentic Antique',
   },
-  Fake: {
+  Reproduction: {
     icon: 'close-circle',
     bg: Colors.fakeLight,
     color: Colors.fake,
-    text: 'Likely Fake',
+    text: 'Reproduction',
   },
-  Uncertain: {
+  Inconclusive: {
     icon: 'help-circle',
     bg: Colors.uncertainLight,
     color: Colors.uncertain,
-    text: 'Uncertain',
+    text: 'Inconclusive',
   },
 };
 

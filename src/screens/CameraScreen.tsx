@@ -93,8 +93,13 @@ export default function CameraScreen({ navigation }: Props) {
 
         <Text style={styles.appName}>ANTIQUITO</Text>
 
-        {/* Placeholder to center title */}
-        <View style={styles.iconBtn} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Tabs')}
+          style={styles.iconBtn}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="close" size={24} color={Colors.white} />
+        </TouchableOpacity>
       </SafeAreaView>
 
       {/* ── Bottom controls ── */}

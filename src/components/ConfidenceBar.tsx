@@ -1,18 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, Animated, StyleSheet } from 'react-native';
-import { Colors, Radius, Spacing } from '../utils/constants';
+import { Radius, Spacing } from '../utils/constants';
 
 interface Props {
-  confidence: number; // 0–100
+  confidence: number;    // 0–100
+  confidenceLabel: string; // e.g. "Likely Authentic"
 }
 
 function getBarColor(confidence: number): string {
-  if (confidence >= 75) return Colors.real;
-  if (confidence >= 50) return Colors.uncertain;
-  return Colors.fake;
+  if (confidence <= 15) return '#922B21'; // Almost Certainly Fake — dark red
+  if (confidence <= 35) return '#C0392B'; // Likely Fake — red
+  if (confidence <= 45) return '#D35400'; // Probably Fake — orange
+  if (confidence <= 55) return '#B7770D'; // Inconclusive — amber
+  if (confidence <= 70) return '#27AE60'; // Probably Authentic — light green
+  if (confidence <= 85) return '#1A7340'; // Likely Authentic — green
+  return '#0D5C35';                       // Highly Authentic — deep green
 }
 
-export default function ConfidenceBar({ confidence }: Props) {
+export default function ConfidenceBar({ confidence, confidenceLabel }: Props) {
   const animatedWidth = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -34,7 +39,7 @@ export default function ConfidenceBar({ confidence }: Props) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.label}>Confidence</Text>
+        <Text style={[styles.label, { color: barColor }]}>{confidenceLabel}</Text>
         <Text style={[styles.value, { color: barColor }]}>{confidence}%</Text>
       </View>
       <View style={styles.track}>
@@ -57,8 +62,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    color: Colors.textSecondary,
-    fontWeight: '500',
+    fontWeight: '700',
   },
   value: {
     fontSize: 18,
@@ -66,7 +70,7 @@ const styles = StyleSheet.create({
   },
   track: {
     height: 8,
-    backgroundColor: Colors.border,
+    backgroundColor: '#E5E0D8',
     borderRadius: Radius.full,
     overflow: 'hidden',
   },
