@@ -12,7 +12,14 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useStore } from '../store/useStore';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+  signOut,
+} from 'firebase/auth';
+import { auth } from '../services/firebase';
 import { Colors, Spacing, Radius, Shadow } from '../utils/constants';
 
 export default function LoginScreen() {
@@ -20,18 +27,27 @@ export default function LoginScreen() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const login = useStore((s) => s.login);
+  const [verificationSent, setVerificationSent] = useState(false);
 
   const isSignUp = mode === 'signup';
+
+  const switchMode = (next: 'signin' | 'signup') => {
+    setMode(next);
+    setError('');
+    setVerificationSent(false);
+    setConfirmPassword('');
+  };
 
   const validate = (): string | null => {
     if (isSignUp && name.trim().length < 2) return 'Please enter your name.';
     if (!email.includes('@') || !email.includes('.')) return 'Enter a valid email address.';
     if (password.length < 6) return 'Password must be at least 6 characters.';
+    if (isSignUp && password !== confirmPassword) return 'Passwords do not match.';
     return null;
   };
 
@@ -41,20 +57,41 @@ export default function LoginScreen() {
     setError('');
     setLoading(true);
 
-    // Simulate network delay
-    await new Promise((r) => setTimeout(r, 900));
-
-    const displayName = isSignUp
-      ? name.trim()
-      : email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
-
-    login({
-      id: Date.now().toString(),
-      email: email.toLowerCase().trim(),
-      name: displayName,
-    });
-
-    setLoading(false);
+    try {
+      if (isSignUp) {
+        const credential = await createUserWithEmailAndPassword(auth, email.trim(), password);
+        await updateProfile(credential.user, { displayName: name.trim() });
+        await sendEmailVerification(credential.user);
+        await signOut(auth); // sign out until they verify
+        setVerificationSent(true);
+        setMode('signin');
+        setName('');
+        setPassword('');
+        setConfirmPassword('');
+      } else {
+        const credential = await signInWithEmailAndPassword(auth, email.trim(), password);
+        if (!credential.user.emailVerified) {
+          await signOut(auth);
+          setError('Please verify your email before signing in. Check your inbox.');
+        }
+        // If verified: onAuthStateChanged fires → store.login() → navigation switches
+      }
+    } catch (err) {
+      const code = (err as any)?.code ?? '';
+      if (code === 'auth/user-not-found' || code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
+        setError('Incorrect email or password.');
+      } else if (code === 'auth/email-already-in-use') {
+        setError('An account with this email already exists.');
+      } else if (code === 'auth/weak-password') {
+        setError('Password must be at least 6 characters.');
+      } else if (code === 'auth/invalid-email') {
+        setError('Please enter a valid email address.');
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -77,13 +114,23 @@ export default function LoginScreen() {
             <Text style={styles.tagline}>Discover the story behind every antique</Text>
           </View>
 
+          {/* ── Verification success banner ── */}
+          {verificationSent && (
+            <View style={styles.verificationBanner}>
+              <Ionicons name="mail-outline" size={20} color={Colors.real} />
+              <Text style={styles.verificationText}>
+                Verification email sent! Check your inbox, click the link, then sign in below.
+              </Text>
+            </View>
+          )}
+
           {/* ── Form card ── */}
           <View style={styles.card}>
             {/* Mode toggle */}
             <View style={styles.toggle}>
               <TouchableOpacity
                 style={[styles.toggleBtn, mode === 'signin' && styles.toggleBtnActive]}
-                onPress={() => { setMode('signin'); setError(''); }}
+                onPress={() => switchMode('signin')}
                 activeOpacity={0.8}
               >
                 <Text style={[styles.toggleText, mode === 'signin' && styles.toggleTextActive]}>
@@ -92,7 +139,7 @@ export default function LoginScreen() {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.toggleBtn, mode === 'signup' && styles.toggleBtnActive]}
-                onPress={() => { setMode('signup'); setError(''); }}
+                onPress={() => switchMode('signup')}
                 activeOpacity={0.8}
               >
                 <Text style={[styles.toggleText, mode === 'signup' && styles.toggleTextActive]}>
@@ -152,8 +199,8 @@ export default function LoginScreen() {
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
-                  returnKeyType="done"
-                  onSubmitEditing={handleSubmit}
+                  returnKeyType={isSignUp ? 'next' : 'done'}
+                  onSubmitEditing={isSignUp ? undefined : handleSubmit}
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeBtn}>
                   <Ionicons
@@ -164,6 +211,34 @@ export default function LoginScreen() {
                 </TouchableOpacity>
               </View>
             </View>
+
+            {/* Confirm password field (sign up only) */}
+            {isSignUp && (
+              <View style={styles.inputGroup}>
+                <Text style={styles.inputLabel}>Confirm Password</Text>
+                <View style={styles.inputRow}>
+                  <Ionicons name="lock-closed-outline" size={18} color={Colors.textTertiary} style={styles.inputIcon} />
+                  <TextInput
+                    style={[styles.input, styles.inputFlex]}
+                    placeholder="Repeat your password"
+                    placeholderTextColor={Colors.textTertiary}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry={!showConfirmPassword}
+                    autoCapitalize="none"
+                    returnKeyType="done"
+                    onSubmitEditing={handleSubmit}
+                  />
+                  <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.eyeBtn}>
+                    <Ionicons
+                      name={showConfirmPassword ? 'eye-off-outline' : 'eye-outline'}
+                      size={18}
+                      color={Colors.textTertiary}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
 
             {/* Error message */}
             {error !== '' && (
@@ -191,7 +266,7 @@ export default function LoginScreen() {
           </View>
 
           <Text style={styles.footerNote}>
-            This is a demo app. Any email + password (6+ chars) will work.
+            Your account is securely managed by Firebase Authentication.
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -233,6 +308,23 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
     textAlign: 'center',
     lineHeight: 20,
+  },
+
+  // ── Verification banner ──
+  verificationBanner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: Colors.realLight,
+    borderRadius: Radius.lg,
+    padding: Spacing.md,
+    gap: Spacing.sm,
+  },
+  verificationText: {
+    flex: 1,
+    fontSize: 13,
+    color: Colors.real,
+    lineHeight: 19,
+    fontWeight: '500',
   },
 
   // ── Card ──

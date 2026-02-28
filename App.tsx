@@ -4,10 +4,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 
 import { RootStackParamList, TabParamList } from './src/types';
 import { useStore } from './src/store/useStore';
+import { useAuthListener } from './src/hooks/useAuthListener';
 import LoginScreen from './src/screens/LoginScreen';
 import CameraScreen from './src/screens/CameraScreen';
 import PreviewScreen from './src/screens/PreviewScreen';
@@ -33,6 +34,17 @@ function MainTabs() {
 
 export default function App() {
   const isAuthenticated = useStore((s) => s.isAuthenticated);
+  const authReady = useStore((s) => s.authReady);
+  useAuthListener();
+
+  // Wait for Firebase to resolve auth state before rendering navigation
+  if (!authReady) {
+    return (
+      <View style={styles.splash}>
+        <ActivityIndicator size="large" color="#8B6914" />
+      </View>
+    );
+  }
 
   return (
     <GestureHandlerRootView style={styles.root}>
@@ -75,4 +87,5 @@ export default function App() {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
+  splash: { flex: 1, backgroundColor: '#F7F3EE', alignItems: 'center', justifyContent: 'center' },
 });

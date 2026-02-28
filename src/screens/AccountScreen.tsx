@@ -2,11 +2,18 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { signOut } from 'firebase/auth';
+import { auth } from '../services/firebase';
 import { useStore } from '../store/useStore';
 import { Colors, Spacing, Radius, Shadow } from '../utils/constants';
 
 export default function AccountScreen() {
-  const { user, logout, scanHistory } = useStore();
+  const { user, scanHistory } = useStore();
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    // onAuthStateChanged fires with null → store.logout() called automatically
+  };
 
   const totalScans = scanHistory.length;
   const realCount = scanHistory.filter((s) => s.result.authenticity === 'Authentic').length;
@@ -55,13 +62,13 @@ export default function AccountScreen() {
           <Text style={styles.sectionTitle}>About</Text>
           <InfoRow icon="information-circle-outline" label="Version" value="1.0.0" />
           <View style={styles.divider} />
-          <InfoRow icon="shield-checkmark-outline" label="AI Engine" value="Mock (Demo)" />
+          <InfoRow icon="shield-checkmark-outline" label="Auth" value="Firebase" />
           <View style={styles.divider} />
           <InfoRow icon="cloud-offline-outline" label="Data Storage" value="On-device only" />
         </View>
 
         {/* ── Logout ── */}
-        <TouchableOpacity style={styles.logoutBtn} onPress={logout} activeOpacity={0.85}>
+        <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout} activeOpacity={0.85}>
           <Ionicons name="log-out-outline" size={20} color={Colors.fake} />
           <Text style={styles.logoutText}>Sign Out</Text>
         </TouchableOpacity>
