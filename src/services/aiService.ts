@@ -19,14 +19,7 @@ const MOCK_RESPONSES: AnalysisResult[] = [
     origin: 'Staffordshire, England',
     description:
       'A hand-painted ceramic vase from the Victorian era featuring intricate floral motifs consistent with the Aesthetic Movement. The piece exhibits characteristic crazing patterns in the lead glaze, period-appropriate iron-oxide pigments, and a partial maker\'s mark on the base consistent with Minton & Co. Staffordshire pottery.',
-    historicalTimeline: [
-      '1837 – Queen Victoria ascends to the throne, beginning the Victorian era',
-      '1851 – The Great Exhibition at Crystal Palace showcases British ceramic craftsmanship to the world',
-      '1862 – International Exhibition introduces Japonisme and aesthetic floral motifs to English potteries',
-      '~1865–1875 – Estimated manufacture window based on glaze composition and kiln firing technique',
-      '1880s – Arts & Crafts Movement begins to influence ceramic decoration styles',
-      '1901 – End of the Victorian era with Queen Victoria\'s death at Osborne House',
-    ],
+    estimatedPrice: '$2,400 – $3,800',
   },
   {
     authenticity: 'Fake',
@@ -36,14 +29,8 @@ const MOCK_RESPONSES: AnalysisResult[] = [
     origin: 'Southeast Asia (suspected)',
     description:
       'This armchair mimics the rococo style of Louis XV-period French furniture but contains multiple anachronistic details. The wood grain is machine-cut rather than hand-shaped, the gilding is electroplated rather than water-gilded gesso, and the upholstery webbing shows synthetic fibers inconsistent with 18th-century textile production.',
-    historicalTimeline: [
-      '1715 – Louis XV becomes King of France, initiating the Rococo style in court furnishings',
-      '1740–1760 – Peak of authentic Louis XV furniture production by Parisian menuisiers',
-      '1789 – French Revolution disrupts aristocratic patronage of luxury craftsmen',
-      '1920s – First major wave of Louis XV reproduction furniture appears in European markets',
-      '1990s – Mass-produced Southeast Asian reproductions flood global antique markets',
-      '2010s – DNA wood analysis and UV fluorescence testing widely used to detect modern reproductions',
-    ],
+    estimatedPrice: '$80 – $150',
+    authenticPrice: '$12,000 – $28,000',
   },
   {
     authenticity: 'Uncertain',
@@ -53,14 +40,6 @@ const MOCK_RESPONSES: AnalysisResult[] = [
     origin: 'Roman Empire (region undetermined)',
     description:
       'This coin bears iconography consistent with Roman Imperial denarii, including a laureate portrait obverse and a reverse deity figure. However, the silver alloy composition and die alignment angle fall within ranges shared by both authentic ancient coins and high-quality modern forgeries produced since the 1970s. Further metallurgical analysis via XRF spectroscopy is strongly recommended.',
-    historicalTimeline: [
-      '211 BC – Rome introduces the denarius as its primary silver currency',
-      '100 BC – Prolific minting of denarii across the Republic supports wide distribution',
-      '27 BC – Augustus Caesar standardizes coin imagery, placing imperial portraits on obverse',
-      '~50–150 AD – Estimated period if authentic, based on portrait style and reverse iconography',
-      '3rd Century AD – Debasement of the denarius silver content leads to economic instability',
-      '1970s–present – Sophisticated electrotype and cast forgeries of Roman coins proliferate globally',
-    ],
   },
 ];
 

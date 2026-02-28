@@ -17,7 +17,6 @@ import { useStore } from '../store/useStore';
 import { analyzeImage } from '../services/aiService';
 import AuthenticityBadge from '../components/AuthenticityBadge';
 import ConfidenceBar from '../components/ConfidenceBar';
-import HistoricalTimeline from '../components/HistoricalTimeline';
 import SkeletonLoader from '../components/SkeletonLoader';
 import { Colors, Spacing, Radius, Shadow } from '../utils/constants';
 
@@ -199,10 +198,46 @@ export default function ResultScreen({ navigation }: Props) {
               <Text style={styles.description}>{displayResult.description}</Text>
             </View>
 
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Historical Timeline</Text>
-              <HistoricalTimeline items={displayResult.historicalTimeline} />
-            </View>
+            {displayResult.authenticity !== 'Uncertain' && (
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>
+                  {displayResult.authenticity === 'Fake' ? 'Pricing' : 'Estimated Value'}
+                </Text>
+
+                <View style={styles.priceRow}>
+                  <View style={styles.infoIcon}>
+                    <Ionicons name="pricetag-outline" size={16} color={Colors.primary} />
+                  </View>
+                  <View style={styles.infoContent}>
+                    <Text style={styles.infoLabel}>
+                      {displayResult.authenticity === 'Fake'
+                        ? 'Counterfeit Market Value'
+                        : 'Estimated Market Value'}
+                    </Text>
+                    <Text style={[styles.priceValue, styles.priceMain]}>
+                      {displayResult.estimatedPrice}
+                    </Text>
+                  </View>
+                </View>
+
+                {displayResult.authenticity === 'Fake' && displayResult.authenticPrice && (
+                  <>
+                    <View style={styles.divider} />
+                    <View style={styles.priceRow}>
+                      <View style={[styles.infoIcon, styles.realPriceIcon]}>
+                        <Ionicons name="shield-checkmark-outline" size={16} color={Colors.real} />
+                      </View>
+                      <View style={styles.infoContent}>
+                        <Text style={styles.infoLabel}>Genuine Original Value</Text>
+                        <Text style={[styles.priceValue, styles.priceReal]}>
+                          {displayResult.authenticPrice}
+                        </Text>
+                      </View>
+                    </View>
+                  </>
+                )}
+              </View>
+            )}
 
             <Text style={styles.disclaimer}>
               This analysis is AI-generated and intended for informational purposes only. For
@@ -270,6 +305,12 @@ const styles = StyleSheet.create({
   divider: { height: 1, backgroundColor: Colors.separator, marginVertical: 2 },
 
   description: { fontSize: 14, color: Colors.textSecondary, lineHeight: 22 },
+
+  priceRow: { flexDirection: 'row', alignItems: 'flex-start', gap: Spacing.md },
+  priceValue: { fontSize: 20, fontWeight: '700', marginTop: 2 },
+  priceMain: { color: Colors.text },
+  priceReal: { color: Colors.real },
+  realPriceIcon: { backgroundColor: 'rgba(26,115,64,0.1)' },
   disclaimer: { fontSize: 12, color: Colors.textTertiary, textAlign: 'center', lineHeight: 18, paddingHorizontal: Spacing.sm },
 
   ctaBtn: { backgroundColor: Colors.primary, height: 54, borderRadius: Radius.lg, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: Spacing.sm, marginTop: Spacing.xs, ...Shadow.strong },

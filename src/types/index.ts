@@ -7,7 +7,8 @@ export interface AnalysisResult {
   estimatedPeriod: string;
   origin: string;
   description: string;
-  historicalTimeline: string[];
+  estimatedPrice?: string;     // Market value of this object (real piece, or replica price for fakes; omitted for Uncertain)
+  authenticPrice?: string;     // Only for Fake: what the genuine original is worth
 }
 
 export interface User {
