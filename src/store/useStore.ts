@@ -24,7 +24,6 @@ interface AppState {
   // ── Subscription ──────────────────────────────────────────────────────────
   isPremium: boolean;
   freeScansUsed: number;
-  freeScansDate: string; // toDateString() — resets counter when date changes
 
   // ── Actions ───────────────────────────────────────────────────────────────
   login: (user: User) => void;
@@ -41,7 +40,7 @@ interface AppState {
 
   setIsPremium: (val: boolean) => void;
   incrementFreeScans: () => void;
-  resetDailyScans: () => void;
+  resetFreeScans: () => void;
 
   reset: () => void;
 }
@@ -64,7 +63,6 @@ export const useStore = create<AppState>()(
       scanHistory: [],
       isPremium: false,
       freeScansUsed: 0,
-      freeScansDate: '',
 
       login: (user) => set({ user, isAuthenticated: true }),
       // scanHistory intentionally NOT cleared on logout — it's local-only data
@@ -82,7 +80,7 @@ export const useStore = create<AppState>()(
 
       setIsPremium: (val) => set({ isPremium: val }),
       incrementFreeScans: () => set((state) => ({ freeScansUsed: state.freeScansUsed + 1 })),
-      resetDailyScans: () => set({ freeScansUsed: 0, freeScansDate: new Date().toDateString() }),
+      resetFreeScans: () => set({ freeScansUsed: 0 }),
 
       reset: () => set(initialScanState),
     }),
@@ -94,7 +92,6 @@ export const useStore = create<AppState>()(
         scanHistory: state.scanHistory,
         isPremium: state.isPremium,
         freeScansUsed: state.freeScansUsed,
-        freeScansDate: state.freeScansDate,
       }),
     }
   )

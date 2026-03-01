@@ -21,7 +21,11 @@
       "Bash(test -f \"d:\\\\Projects\\\\Craft\\\\React Native Apps\\\\antiquito\\\\eas.json\")",
       "Bash(test -f \"d:\\\\Projects\\\\Craft\\\\React Native Apps\\\\antiquito\\\\expo-module.config.json\")",
       "Bash(test -d \"d:\\\\Projects\\\\Craft\\\\React Native Apps\\\\antiquito\\\\ios\")",
-      "Bash(test -d \"d:\\\\Projects\\\\Craft\\\\React Native Apps\\\\antiquito\\\\modules\")"
+      "Bash(test -d \"d:\\\\Projects\\\\Craft\\\\React Native Apps\\\\antiquito\\\\modules\")",
+      "Bash(./gradlew app:assembleDebug -x lint -x test --configure-on-demand --build-cache -PreactNativeArchitectures=arm64-v8a)",
+      "Bash(npm show react-native-iap@\">=12\" version --json)",
+      "Bash(npm install react-native-iap@^14.7.12)",
+      "Bash(node -e \"const iap = require\\(''./node_modules/react-native-iap/src/index.ts''\\); console.log\\(Object.keys\\(iap\\)\\)\")"
     ]
   }
 }

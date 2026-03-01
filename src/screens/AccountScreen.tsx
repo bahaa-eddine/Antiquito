@@ -8,6 +8,7 @@ import Constants from 'expo-constants';
 import { signOut } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { useStore } from '../store/useStore';
+import PlanBadge from '../components/PlanBadge';
 import { Colors, Spacing, Radius, Shadow } from '../utils/constants';
 import { RootStackParamList } from '../types';
 
@@ -18,7 +19,7 @@ export default function AccountScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const isPremium = useStore((s) => s.isPremium);
   const setIsPremium = useStore((s) => s.setIsPremium);
-  const resetDailyScans = useStore((s) => s.resetDailyScans);
+  const resetFreeScans = useStore((s) => s.resetFreeScans);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -27,7 +28,7 @@ export default function AccountScreen() {
 
   const handleResetTestData = () => {
     setIsPremium(false);
-    resetDailyScans(); // resets freeScansUsed = 0, freeScansDate = today
+    resetFreeScans();
     Alert.alert('Reset', 'Subscription cleared. You now have 3 free scans again.');
   };
 
@@ -48,6 +49,9 @@ export default function AccountScreen() {
       {/* ── Header ── */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Account</Text>
+        <PlanBadge
+          onPress={isPremium ? undefined : () => navigation.navigate('Paywall')}
+        />
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
@@ -103,7 +107,7 @@ export default function AccountScreen() {
                 onPress={() => navigation.navigate('Paywall')}
                 activeOpacity={0.8}
               >
-                <Ionicons name="crown-outline" size={16} color={Colors.primary} />
+                <Ionicons name="trophy-outline" size={16} color={Colors.primary} />
                 <Text style={[styles.testBtnText, styles.testBtnTextPrimary]}>Open Paywall</Text>
               </TouchableOpacity>
             </View>
@@ -163,6 +167,9 @@ function InfoRow({
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: Colors.background },
   header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: Spacing.lg,
     paddingVertical: Spacing.md,
     borderBottomWidth: 1,

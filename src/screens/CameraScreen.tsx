@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../types';
 import { useCamera } from '../hooks/useCamera';
+import PlanBadge from '../components/PlanBadge';
 import { Colors, Spacing, SCREEN_HEIGHT } from '../utils/constants';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Camera'>;
@@ -93,13 +94,7 @@ export default function CameraScreen({ navigation }: Props) {
 
         <Text style={styles.appName}>ANTIQUITO</Text>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Tabs')}
-          style={styles.iconBtn}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="close" size={24} color={Colors.white} />
-        </TouchableOpacity>
+        <PlanBadge dark onPress={() => navigation.navigate('Tabs')} />
       </SafeAreaView>
 
       {/* ── Bottom controls ── */}
@@ -208,7 +203,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     letterSpacing: 3,
   },
-
   // ── Bottom gradient + bar ──
   bottomGradient: {
     position: 'absolute',

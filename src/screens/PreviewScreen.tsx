@@ -24,20 +24,11 @@ export default function PreviewScreen({ route, navigation }: Props) {
   const { setCapturedImage, isLoading } = useStore();
   const isPremium = useStore((s) => s.isPremium);
   const freeScansUsed = useStore((s) => s.freeScansUsed);
-  const freeScansDate = useStore((s) => s.freeScansDate);
   const incrementFreeScans = useStore((s) => s.incrementFreeScans);
-  const resetDailyScans = useStore((s) => s.resetDailyScans);
 
   const handleAnalyze = () => {
     if (!isPremium) {
-      const today = new Date().toDateString();
-      // Reset counter if it's a new day
-      if (freeScansDate !== today) {
-        resetDailyScans();
-      }
-      // Re-read after potential reset — use fresh values
-      const scansUsed = freeScansDate !== today ? 0 : freeScansUsed;
-      if (scansUsed >= FREE_SCAN_LIMIT) {
+      if (freeScansUsed >= FREE_SCAN_LIMIT) {
         navigation.navigate('Paywall');
         return;
       }
@@ -84,9 +75,9 @@ export default function PreviewScreen({ route, navigation }: Props) {
       {/* ── Bottom CTA ── */}
       <SafeAreaView edges={['bottom']} style={styles.bottomSection}>
         <Text style={styles.readyText}>Ready to analyze?</Text>
-        {!isPremium && (freeScansDate === new Date().toDateString()) && (
+        {!isPremium && freeScansUsed < FREE_SCAN_LIMIT && (
           <Text style={styles.scansRemaining}>
-            {Math.max(0, FREE_SCAN_LIMIT - freeScansUsed)} free scan{FREE_SCAN_LIMIT - freeScansUsed === 1 ? '' : 's'} remaining today
+            {FREE_SCAN_LIMIT - freeScansUsed} free scan{FREE_SCAN_LIMIT - freeScansUsed === 1 ? '' : 's'} remaining
           </Text>
         )}
         <Text style={styles.readySubtext}>

@@ -4,13 +4,13 @@ import Constants from 'expo-constants';
 import {
   initConnection,
   endConnection,
-  getSubscriptions,
-  requestSubscription,
+  fetchProducts,
+  requestPurchase,
   getAvailablePurchases,
   finishTransaction,
   purchaseUpdatedListener,
   purchaseErrorListener,
-  Subscription,
+  ProductSubscription,
   Purchase,
 } from 'react-native-iap';
 import { useStore } from '../store/useStore';
@@ -18,27 +18,28 @@ import { PRODUCT_IDS } from '../utils/iap';
 
 const SKUS = Object.values(PRODUCT_IDS);
 
-// IAP native APIs are unavailable inside Expo Go — use simulated responses instead
+// Use mock products in Expo Go and all debug builds (real IAP needs Play Console setup)
 const IS_EXPO_GO = Constants.appOwnership === 'expo';
+const USE_MOCK = IS_EXPO_GO || __DEV__;
 
 const MOCK_PRODUCTS = [
-  { productId: PRODUCT_IDS.weekly,  title: 'Weekly Premium',  localizedPrice: '$0.99' },
-  { productId: PRODUCT_IDS.monthly, title: 'Monthly Premium', localizedPrice: '$2.99' },
-] as unknown as Subscription[];
+  { id: PRODUCT_IDS.weekly,  title: 'Weekly Premium',  displayPrice: '$0.99', type: 'subs', platform: 'android' },
+  { id: PRODUCT_IDS.monthly, title: 'Monthly Premium', displayPrice: '$2.99', type: 'subs', platform: 'android' },
+] as unknown as ProductSubscription[];
 
 const delay = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));
 
 export function useSubscription() {
   const isPremium = useStore((s) => s.isPremium);
   const setIsPremium = useStore((s) => s.setIsPremium);
-  const [products, setProducts] = useState<Subscription[]>([]);
+  const [products, setProducts] = useState<ProductSubscription[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isTestMode = IS_EXPO_GO;
 
   useEffect(() => {
-    if (IS_EXPO_GO) {
-      // Load mock products immediately so the paywall is fully previewable
+    if (USE_MOCK) {
+      // Load mock products immediately (Expo Go or debug build)
       setProducts(MOCK_PRODUCTS);
       return;
     }
@@ -57,8 +58,8 @@ export function useSubscription() {
 
         purchaseErrorSub = purchaseErrorListener(() => {});
 
-        const subs = await getSubscriptions({ skus: SKUS });
-        setProducts(subs);
+        const subs = await fetchProducts({ skus: SKUS, type: 'subs' });
+        setProducts(subs as ProductSubscription[]);
 
         const existing = await getAvailablePurchases();
         if (existing.length > 0) setIsPremium(true);
@@ -80,23 +81,27 @@ export function useSubscription() {
     setLoading(true);
     setError(null);
     try {
-      if (IS_EXPO_GO) {
-        // Simulate purchase flow for Expo Go preview
+      if (USE_MOCK) {
+        // Simulate purchase flow in Expo Go / debug build
         await delay(1500);
         setIsPremium(true);
         return true;
       }
 
+      const product = products.find((p) => p.id === productId);
+      const offerToken =
+        (product as any)?.subscriptionOfferDetails?.[0]?.offerToken ?? '';
+
       if (Platform.OS === 'android') {
-        const product = products.find((p) => p.productId === productId);
-        const offerToken =
-          (product as any)?.subscriptionOfferDetails?.[0]?.offerToken ?? '';
-        await requestSubscription({
-          sku: productId,
-          subscriptionOffers: [{ sku: productId, offerToken }],
+        await requestPurchase({
+          type: 'subs',
+          request: { google: { skus: [productId], offerToken } },
         });
       } else {
-        await requestSubscription({ sku: productId });
+        await requestPurchase({
+          type: 'subs',
+          request: { apple: { sku: productId } },
+        });
       }
       return true;
     } catch (e: any) {
@@ -113,7 +118,7 @@ export function useSubscription() {
     setLoading(true);
     setError(null);
     try {
-      if (IS_EXPO_GO) {
+      if (USE_MOCK) {
         await delay(1000);
         setError('No active subscription found. (Test mode)');
         return false;

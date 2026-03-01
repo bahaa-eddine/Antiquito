@@ -7,12 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'; // still used by EmptyState
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useStore } from '../store/useStore';
 import { ScanRecord, RootStackParamList } from '../types';
 import ScanHistoryCard from '../components/ScanHistoryCard';
+import PlanBadge from '../components/PlanBadge';
 import { Colors, Spacing, Radius } from '../utils/constants';
 
 type NavProp = NativeStackNavigationProp<RootStackParamList>;
@@ -20,6 +21,7 @@ type NavProp = NativeStackNavigationProp<RootStackParamList>;
 export default function HistoryScreen() {
   const { scanHistory, setViewingScan } = useStore();
   const navigation = useNavigation<NavProp>();
+  const isPremium = useStore((s) => s.isPremium);
 
   const handleCardPress = (record: ScanRecord) => {
     setViewingScan(record);
@@ -38,9 +40,9 @@ export default function HistoryScreen() {
             </Text>
           )}
         </View>
-        <View style={styles.logoMark}>
-          <Ionicons name="search" size={18} color={Colors.primary} />
-        </View>
+        <PlanBadge
+          onPress={isPremium ? undefined : () => navigation.navigate('Paywall')}
+        />
       </View>
 
       {scanHistory.length === 0 ? (
@@ -94,15 +96,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: { fontSize: 22, fontWeight: '700', color: Colors.text },
   headerSubtitle: { fontSize: 13, color: Colors.textSecondary, marginTop: 2 },
-  logoMark: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    backgroundColor: Colors.surfaceAlt,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
   // ── List ──
   listContent: { padding: Spacing.md, paddingBottom: Spacing.xxl },
   separator: { height: Spacing.sm },

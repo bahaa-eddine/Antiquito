@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -29,18 +29,20 @@ const BENEFITS = [
 export default function PaywallScreen({ navigation }: Props) {
   const { isPremium, products, loading, error, isTestMode, subscribe, restore } = useSubscription();
   const [selectedId, setSelectedId] = useState<string>(PRODUCT_IDS.monthly);
+  const prevIsPremiumRef = useRef(isPremium);
 
-  // Navigate back automatically as soon as the purchase is confirmed
+  // Show success alert only when isPremium transitions false → true (not on initial mount)
   useEffect(() => {
-    if (isPremium) {
+    if (isPremium && !prevIsPremiumRef.current) {
       Alert.alert('Welcome to Premium!', 'You now have unlimited scans.', [
         { text: 'Get Started', onPress: () => navigation.goBack() },
       ]);
     }
+    prevIsPremiumRef.current = isPremium;
   }, [isPremium]);
 
-  const monthlyProduct = products.find((p) => p.productId === PRODUCT_IDS.monthly);
-  const weeklyProduct  = products.find((p) => p.productId === PRODUCT_IDS.weekly);
+  const monthlyProduct = products.find((p) => p.id === PRODUCT_IDS.monthly);
+  const weeklyProduct  = products.find((p) => p.id === PRODUCT_IDS.weekly);
 
   const handleSubscribe = () => subscribe(selectedId);
 
@@ -77,7 +79,7 @@ export default function PaywallScreen({ navigation }: Props) {
         {/* ── Hero ── */}
         <View style={styles.hero}>
           <View style={styles.heroIcon}>
-            <Ionicons name="crown" size={40} color={Colors.primary} />
+            <Ionicons name="trophy" size={40} color={Colors.primary} />
           </View>
           <Text style={styles.heroTitle}>Unlock Unlimited Scans</Text>
           <Text style={styles.heroSubtitle}>
@@ -126,7 +128,7 @@ export default function PaywallScreen({ navigation }: Props) {
                     <Text style={styles.productName}>{monthlyProduct.title ?? 'Monthly Premium'}</Text>
                     <Text style={styles.productDescription}>Billed monthly</Text>
                   </View>
-                  <Text style={styles.productPrice}>{monthlyProduct.localizedPrice}</Text>
+                  <Text style={styles.productPrice}>{monthlyProduct.displayPrice}</Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -153,7 +155,7 @@ export default function PaywallScreen({ navigation }: Props) {
                     <Text style={styles.productName}>{weeklyProduct.title ?? 'Weekly Premium'}</Text>
                     <Text style={styles.productDescription}>Billed weekly</Text>
                   </View>
-                  <Text style={styles.productPrice}>{weeklyProduct.localizedPrice}</Text>
+                  <Text style={styles.productPrice}>{weeklyProduct.displayPrice}</Text>
                 </View>
               </TouchableOpacity>
             )}
