@@ -1,18 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
-import {
-  initConnection,
-  endConnection,
-  fetchProducts,
-  requestPurchase,
-  getAvailablePurchases,
-  finishTransaction,
-  purchaseUpdatedListener,
-  purchaseErrorListener,
-  ProductSubscription,
-  Purchase,
-} from 'react-native-iap';
+// Type-only imports — erased at runtime, never trigger NitroModules initialization
+import type { ProductSubscription, Purchase } from 'react-native-iap';
 import { useStore } from '../store/useStore';
 import { PRODUCT_IDS } from '../utils/iap';
 
@@ -39,29 +29,32 @@ export function useSubscription() {
 
   useEffect(() => {
     if (USE_MOCK) {
-      // Load mock products immediately (Expo Go or debug build)
+      // Load mock products immediately — never touch NitroModules in Expo Go / dev
       setProducts(MOCK_PRODUCTS);
       return;
     }
 
-    let purchaseUpdateSub: ReturnType<typeof purchaseUpdatedListener>;
-    let purchaseErrorSub: ReturnType<typeof purchaseErrorListener>;
+    // Lazy require: NitroModules only initializes here, after the mock guard
+    const iap = require('react-native-iap') as typeof import('react-native-iap');
+
+    let purchaseUpdateSub: ReturnType<typeof iap.purchaseUpdatedListener>;
+    let purchaseErrorSub: ReturnType<typeof iap.purchaseErrorListener>;
 
     const init = async () => {
       try {
-        await initConnection();
+        await iap.initConnection();
 
-        purchaseUpdateSub = purchaseUpdatedListener(async (purchase: Purchase) => {
-          await finishTransaction({ purchase, isConsumable: false });
+        purchaseUpdateSub = iap.purchaseUpdatedListener(async (purchase: Purchase) => {
+          await iap.finishTransaction({ purchase, isConsumable: false });
           setIsPremium(true);
         });
 
-        purchaseErrorSub = purchaseErrorListener(() => {});
+        purchaseErrorSub = iap.purchaseErrorListener(() => {});
 
-        const subs = await fetchProducts({ skus: SKUS, type: 'subs' });
+        const subs = await iap.fetchProducts({ skus: SKUS, type: 'subs' });
         setProducts(subs as ProductSubscription[]);
 
-        const existing = await getAvailablePurchases();
+        const existing = await iap.getAvailablePurchases();
         if (existing.length > 0) setIsPremium(true);
       } catch {
         // IAP unavailable (simulator without StoreKit config, etc.)
@@ -73,7 +66,7 @@ export function useSubscription() {
     return () => {
       purchaseUpdateSub?.remove();
       purchaseErrorSub?.remove();
-      endConnection();
+      iap.endConnection();
     };
   }, []);
 
@@ -82,23 +75,23 @@ export function useSubscription() {
     setError(null);
     try {
       if (USE_MOCK) {
-        // Simulate purchase flow in Expo Go / debug build
         await delay(1500);
         setIsPremium(true);
         return true;
       }
 
+      const iap = require('react-native-iap') as typeof import('react-native-iap');
       const product = products.find((p) => p.id === productId);
       const offerToken =
         (product as any)?.subscriptionOfferDetails?.[0]?.offerToken ?? '';
 
       if (Platform.OS === 'android') {
-        await requestPurchase({
+        await iap.requestPurchase({
           type: 'subs',
           request: { google: { skus: [productId], offerToken } },
         });
       } else {
-        await requestPurchase({
+        await iap.requestPurchase({
           type: 'subs',
           request: { apple: { sku: productId } },
         });
@@ -124,7 +117,8 @@ export function useSubscription() {
         return false;
       }
 
-      const purchases = await getAvailablePurchases();
+      const iap = require('react-native-iap') as typeof import('react-native-iap');
+      const purchases = await iap.getAvailablePurchases();
       if (purchases.length > 0) {
         setIsPremium(true);
         return true;
