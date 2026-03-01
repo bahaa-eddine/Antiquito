@@ -1,0 +1,509 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2B000001000000000000AAAA /* AntiquitoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000001000000000000AAAA /* AntiquitoApp.swift */; };
+		2B000002000000000000AAAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000002000000000000AAAA /* ContentView.swift */; };
+		2B000003000000000000AAAA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000003000000000000AAAA /* Models.swift */; };
+		2B000004000000000000AAAA /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000004000000000000AAAA /* AppStore.swift */; };
+		2B000005000000000000AAAA /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000005000000000000AAAA /* AuthService.swift */; };
+		2B000006000000000000AAAA /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000006000000000000AAAA /* AIService.swift */; };
+		2B000007000000000000AAAA /* IAPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000007000000000000AAAA /* IAPService.swift */; };
+		2B000008000000000000AAAA /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000008000000000000AAAA /* LoginScreen.swift */; };
+		2B000009000000000000AAAA /* RegisterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000009000000000000AAAA /* RegisterScreen.swift */; };
+		2B00000A000000000000AAAA /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000A000000000000AAAA /* MainTabView.swift */; };
+		2B00000B000000000000AAAA /* CameraScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000B000000000000AAAA /* CameraScreen.swift */; };
+		2B00000C000000000000AAAA /* PreviewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000C000000000000AAAA /* PreviewScreen.swift */; };
+		2B00000D000000000000AAAA /* ResultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000D000000000000AAAA /* ResultScreen.swift */; };
+		2B00000E000000000000AAAA /* HistoryScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000E000000000000AAAA /* HistoryScreen.swift */; };
+		2B00000F000000000000AAAA /* AccountScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A00000F000000000000AAAA /* AccountScreen.swift */; };
+		2B000010000000000000AAAA /* PaywallScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000010000000000000AAAA /* PaywallScreen.swift */; };
+		2B000011000000000000AAAA /* AuthenticityBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000011000000000000AAAA /* AuthenticityBadge.swift */; };
+		2B000012000000000000AAAA /* PlanBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000012000000000000AAAA /* PlanBadge.swift */; };
+		2B000013000000000000AAAA /* ScanHistoryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000013000000000000AAAA /* ScanHistoryCard.swift */; };
+		2B000014000000000000AAAA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A000014000000000000AAAA /* Constants.swift */; };
+		2B000015000000000000AAAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A000016000000000000AAAA /* Assets.xcassets */; };
+		2B000016000000000000AAAA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A000017000000000000AAAA /* GoogleService-Info.plist */; };
+		2B000017000000000000AAAA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A000019000000000000AAAA /* AVFoundation.framework */; };
+		2B000018000000000000AAAA /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A00001A000000000000AAAA /* StoreKit.framework */; };
+		2B000019000000000000AAAA /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 9C000002000000000000AAAA /* FirebaseCore */; };
+		2B00001A000000000000AAAA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9C000003000000000000AAAA /* FirebaseAuth */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1A000001000000000000AAAA /* AntiquitoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AntiquitoApp.swift; sourceTree = "<group>"; };
+		1A000002000000000000AAAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1A000003000000000000AAAA /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		1A000004000000000000AAAA /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		1A000005000000000000AAAA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		1A000006000000000000AAAA /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		1A000007000000000000AAAA /* IAPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPService.swift; sourceTree = "<group>"; };
+		1A000008000000000000AAAA /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		1A000009000000000000AAAA /* RegisterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScreen.swift; sourceTree = "<group>"; };
+		1A00000A000000000000AAAA /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		1A00000B000000000000AAAA /* CameraScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraScreen.swift; sourceTree = "<group>"; };
+		1A00000C000000000000AAAA /* PreviewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewScreen.swift; sourceTree = "<group>"; };
+		1A00000D000000000000AAAA /* ResultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScreen.swift; sourceTree = "<group>"; };
+		1A00000E000000000000AAAA /* HistoryScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryScreen.swift; sourceTree = "<group>"; };
+		1A00000F000000000000AAAA /* AccountScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountScreen.swift; sourceTree = "<group>"; };
+		1A000010000000000000AAAA /* PaywallScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallScreen.swift; sourceTree = "<group>"; };
+		1A000011000000000000AAAA /* AuthenticityBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticityBadge.swift; sourceTree = "<group>"; };
+		1A000012000000000000AAAA /* PlanBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanBadge.swift; sourceTree = "<group>"; };
+		1A000013000000000000AAAA /* ScanHistoryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanHistoryCard.swift; sourceTree = "<group>"; };
+		1A000014000000000000AAAA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		1A000015000000000000AAAA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A000016000000000000AAAA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1A000017000000000000AAAA /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1A000018000000000000AAAA /* Antiquito.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Antiquito.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A000019000000000000AAAA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		1A00001A000000000000AAAA /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D000003000000000000AAAA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B000017000000000000AAAA /* AVFoundation.framework in Frameworks */,
+				2B000018000000000000AAAA /* StoreKit.framework in Frameworks */,
+				2B000019000000000000AAAA /* FirebaseCore in Frameworks */,
+				2B00001A000000000000AAAA /* FirebaseAuth in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3C000001000000000000AAAA = {
+			isa = PBXGroup;
+			children = (
+				3C000002000000000000AAAA /* Antiquito */,
+				3C00000A000000000000AAAA /* Frameworks */,
+				3C000009000000000000AAAA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3C000002000000000000AAAA /* Antiquito */ = {
+			isa = PBXGroup;
+			children = (
+				1A000001000000000000AAAA /* AntiquitoApp.swift */,
+				1A000002000000000000AAAA /* ContentView.swift */,
+				3C000003000000000000AAAA /* Models */,
+				3C000004000000000000AAAA /* Store */,
+				3C000005000000000000AAAA /* Services */,
+				3C000006000000000000AAAA /* Screens */,
+				3C000007000000000000AAAA /* Components */,
+				3C000008000000000000AAAA /* Utils */,
+				1A000015000000000000AAAA /* Info.plist */,
+				1A000016000000000000AAAA /* Assets.xcassets */,
+				1A000017000000000000AAAA /* GoogleService-Info.plist */,
+			);
+			path = Antiquito;
+			sourceTree = "<group>";
+		};
+		3C000003000000000000AAAA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1A000003000000000000AAAA /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3C000004000000000000AAAA /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				1A000004000000000000AAAA /* AppStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		3C000005000000000000AAAA /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				1A000005000000000000AAAA /* AuthService.swift */,
+				1A000006000000000000AAAA /* AIService.swift */,
+				1A000007000000000000AAAA /* IAPService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3C000006000000000000AAAA /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				1A000008000000000000AAAA /* LoginScreen.swift */,
+				1A000009000000000000AAAA /* RegisterScreen.swift */,
+				1A00000A000000000000AAAA /* MainTabView.swift */,
+				1A00000B000000000000AAAA /* CameraScreen.swift */,
+				1A00000C000000000000AAAA /* PreviewScreen.swift */,
+				1A00000D000000000000AAAA /* ResultScreen.swift */,
+				1A00000E000000000000AAAA /* HistoryScreen.swift */,
+				1A00000F000000000000AAAA /* AccountScreen.swift */,
+				1A000010000000000000AAAA /* PaywallScreen.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3C000007000000000000AAAA /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				1A000011000000000000AAAA /* AuthenticityBadge.swift */,
+				1A000012000000000000AAAA /* PlanBadge.swift */,
+				1A000013000000000000AAAA /* ScanHistoryCard.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		3C000008000000000000AAAA /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1A000014000000000000AAAA /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3C000009000000000000AAAA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A000018000000000000AAAA /* Antiquito.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C00000A000000000000AAAA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A000019000000000000AAAA /* AVFoundation.framework */,
+				1A00001A000000000000AAAA /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5E000001000000000000AAAA /* Antiquito */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B000002000000000000AAAA /* Build configuration list for PBXNativeTarget "Antiquito" */;
+			buildPhases = (
+				4D000003000000000000AAAA /* Frameworks */,
+				4D000001000000000000AAAA /* Sources */,
+				4D000002000000000000AAAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Antiquito;
+			packageProductDependencies = (
+				9C000002000000000000AAAA /* FirebaseCore */,
+				9C000003000000000000AAAA /* FirebaseAuth */,
+			);
+			productName = Antiquito;
+			productReference = 1A000018000000000000AAAA /* Antiquito.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6F000001000000000000AAAA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					5E000001000000000000AAAA = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 8B000001000000000000AAAA /* Build configuration list for PBXProject "Antiquito" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3C000001000000000000AAAA;
+			packageReferences = (
+				9C000001000000000000AAAA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			productRefGroup = 3C000009000000000000AAAA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5E000001000000000000AAAA /* Antiquito */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4D000002000000000000AAAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B000015000000000000AAAA /* Assets.xcassets in Resources */,
+				2B000016000000000000AAAA /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D000001000000000000AAAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B000001000000000000AAAA /* AntiquitoApp.swift in Sources */,
+				2B000002000000000000AAAA /* ContentView.swift in Sources */,
+				2B000003000000000000AAAA /* Models.swift in Sources */,
+				2B000004000000000000AAAA /* AppStore.swift in Sources */,
+				2B000005000000000000AAAA /* AuthService.swift in Sources */,
+				2B000006000000000000AAAA /* AIService.swift in Sources */,
+				2B000007000000000000AAAA /* IAPService.swift in Sources */,
+				2B000008000000000000AAAA /* LoginScreen.swift in Sources */,
+				2B000009000000000000AAAA /* RegisterScreen.swift in Sources */,
+				2B00000A000000000000AAAA /* MainTabView.swift in Sources */,
+				2B00000B000000000000AAAA /* CameraScreen.swift in Sources */,
+				2B00000C000000000000AAAA /* PreviewScreen.swift in Sources */,
+				2B00000D000000000000AAAA /* ResultScreen.swift in Sources */,
+				2B00000E000000000000AAAA /* HistoryScreen.swift in Sources */,
+				2B00000F000000000000AAAA /* AccountScreen.swift in Sources */,
+				2B000010000000000000AAAA /* PaywallScreen.swift in Sources */,
+				2B000011000000000000AAAA /* AuthenticityBadge.swift in Sources */,
+				2B000012000000000000AAAA /* PlanBadge.swift in Sources */,
+				2B000013000000000000AAAA /* ScanHistoryCard.swift in Sources */,
+				2B000014000000000000AAAA /* Constants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7A000001000000000000AAAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_CYCLE = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7A000002000000000000AAAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_CYCLE = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7A000003000000000000AAAA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Antiquito/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.antiquito.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		7A000004000000000000AAAA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Antiquito/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.antiquito.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8B000001000000000000AAAA /* Build configuration list for PBXProject "Antiquito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A000001000000000000AAAA /* Debug */,
+				7A000002000000000000AAAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8B000002000000000000AAAA /* Build configuration list for PBXNativeTarget "Antiquito" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A000003000000000000AAAA /* Debug */,
+				7A000004000000000000AAAA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9C000001000000000000AAAA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9C000002000000000000AAAA /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C000001000000000000AAAA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		9C000003000000000000AAAA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9C000001000000000000AAAA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+	};
+	rootObject = 6F000001000000000000AAAA /* Project object */;
+}

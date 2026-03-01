@@ -69,7 +69,7 @@ final class IAPService: ObservableObject {
         defer { isLoading = false }
 
         do {
-            try await AppStore.sync()
+            try await StoreKit.AppStore.sync()
         } catch {
             errorMessage = error.localizedDescription
             return false
